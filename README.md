@@ -1,6 +1,6 @@
 # Darknet Netowrk Topology
 
-This project relate to a research work that aims to understand the network topology of the Darknet.
+This project relates to a research work that aims to understand the network topology of the Darknet.
 
 
 ## Getting Started
@@ -289,23 +289,63 @@ $ sudo systemctl daemon-reload
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+To make sure the system is set up properly we will run few tests
 
-### Break down into end to end tests
+### Tor test
+This test check if tor is installed and is running as desired.
 
-Explain what these tests test and why
+Start python through terminal and run the following lines (*Before running these lines, start your tor browser somewhere or just make sure you are refering to an active onion url*)
+```
+import requests
+
+session = requests.session()
+session.proxies = {'http':  'socks5h://localhost:9050',
+                   'https': 'socks5h://localhost:9050'}
+
+onion = 'blockchainbdgpzk.onion'
+
+page = session.get(F"http://{str(onion)}", timeout=5)
+```
+If the `page` object return status code 200 - we are good, otherwise there is some problem in the *tor* configuration.
+
+### OrientDB test
+This test check if OrientDB is installed and is running as desired.
+
+After executing the scrip `init_db.py` that will be described in the [wiki](https://github.com/montequie/darknet-network-topology/wiki), we will run the following code lines
 
 ```
-Give an example
+import requests
+import pyorient
+
+session = requests.session()
+session.proxies = {'http':  'socks5h://localhost:9050',
+                   'https': 'socks5h://localhost:9050'}
+
+orientdb_client = pyorient.OrientDB("localhost", 2424) # host, port
+
+# open a connection (username and password)
+session_id = orientdb_client.connect("root", "Montequie#39")
+
+#TODO: make sure the db is created / exist
+
+# select to use that database
+orientdb_client.db_open("Darknet", "root", "Montequie#39")
+
+
+onion = 'blockchainbdgpzk.onion'
+
+page = session.get(F"http://{str(onion)}", timeout=5)
+
+state = True
+hash_content = ''
+orientdb_client.command(F"insert into ACTIVE  (HTTP_Response, URL, ALIVE, HASH_Content) values('{' '}', '{onion}', {state}, '{hash_content}')")
+
+print(orientdb_client.command(F"select count(*) from ACTIVE where ALIVE = true")[0].oRecordData['count'])
 ```
 
-### And coding style tests
+This is a modified version of the code from the previous test section, we will try to insert a record to the db and then to retrieve it.
 
-Explain what these tests test and why
-
-```
-Give an example
-```
+If the code print a number larger then 0, and the `onion` site is indeed active we are good to go!
 
 ## Deployment
 
@@ -313,23 +353,9 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* [Tor](https://www.torproject.org/download/download-easy.html) - Local SOCKS5 proxy
+* [OrientDB](https://orientdb.com/) - Graph database
+* [PyOrient](https://github.com/mogui/pyorient) - Orientdb driver for python that uses the binary protocol
 
 ## License
 
