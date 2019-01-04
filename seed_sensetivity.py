@@ -9,12 +9,12 @@ onions_path = r'/Users/montequie/Dropbox/IDC - CS/WashU/Darknet/torPOC/'
 orientdb_client = pyorient.OrientDB("localhost", 2424) # host, port
 
 # open a connection (username and password)
-session_id = orientdb_client.connect("root", "Montequie#39")
+session_id = orientdb_client.connect("root", "Password1")
 
 #TODO: make sure the db is created / exist
 
 # select to use that database
-orientdb_client.db_open("Darknet", "root", "Montequie#39")
+orientdb_client.db_open("Darknet", "root", "Password1")
 
 # TODO: implement select crawl
 #active_cluster_id, inactive_cluster_id = createClusters()
