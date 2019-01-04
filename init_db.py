@@ -4,7 +4,7 @@ def initGraphDB(db_name):
     # create a database
     orientdb_client.db_create(F"{db_name}",pyorient.DB_TYPE_GRAPH, pyorient.STORAGE_TYPE_PLOCAL)
     #orientdb_client.db_create(F"{db_name}", pyorient.DB_TYPE_GRAPH, pyorient.STORAGE_TYPE_MEMORY)
-    orientdb_client.db_open(F"{db_name}", "root", "Montequie#39")
+    orientdb_client.db_open(F"{db_name}", "root", "Password1")
     # create abstract class onion
     orientdb_client.command("CREATE CLASS onion EXTENDS V ABSTRACT")
     # create mandatory property URL
@@ -29,10 +29,7 @@ def initGraphDB(db_name):
 orientdb_client = pyorient.OrientDB("localhost", 2424) # host, port
 
 # open a connection (username and password)
-session_id = orientdb_client.connect("root", "Montequie#39")
+session_id = orientdb_client.connect("root", "Password1")
 
 db_name = "Darknet"
 initGraphDB(db_name)
-
-# select to use that database
-#orientdb_client.db_open(db_name, "root", "Montequie#39")
