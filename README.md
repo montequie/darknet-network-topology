@@ -349,20 +349,12 @@ If the code print a number larger then 0, and the `onion` site is indeed active 
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+If you followed all the instructions and you start seeing **txt** files inside both *full_scans* and *high_freq* directories the system is working.
+
+Don't panic if you see at first files only in the *high_freq* one, the full scans can take hours.
 
 ## Built With
 
 * [Tor](https://www.torproject.org/download/download-easy.html) - Local SOCKS5 proxy
 * [OrientDB](https://orientdb.com/) - Graph database
 * [PyOrient](https://github.com/mogui/pyorient) - Orientdb driver for python that uses the binary protocol
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
