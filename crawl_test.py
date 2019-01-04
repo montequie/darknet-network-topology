@@ -5,11 +5,11 @@ onions_path = r'/home/talmoran/darknet/'
 orientdb_client = pyorient.OrientDB("localhost", 2424) # host, port
 
 # open a connection (username and password)
-session_id = orientdb_client.connect("root", "Montequie#39")
+session_id = orientdb_client.connect("root", "Password1")
 
 db_name = "Darknet"
 
-orientdb_client.db_open(db_name, "root", "Montequie#39")
+orientdb_client.db_open(db_name, "root", "Password1")
 #cluster_id = input("enter cluster ")
 clusters = ["darknet_103",
 "darknet_105",
