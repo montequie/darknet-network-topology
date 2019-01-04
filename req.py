@@ -210,10 +210,10 @@ session.proxies = {'http': 'socks5h://localhost:9050',
 orientdb_client = pyorient.OrientDB("localhost", 2424)  # host, port
 
 # open a connection (username and password)
-session_id = orientdb_client.connect("root", "Montequie#39")
+session_id = orientdb_client.connect("root", "Password1")
 
 # select to use that database
-orientdb_client.db_open("Darknet", "root", "Montequie#39")
+orientdb_client.db_open("Darknet", "root", "Password1")
 
 while True:
     vertex_cluster = createCluster("ACTIVE")
